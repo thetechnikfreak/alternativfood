@@ -1,6 +1,6 @@
 async function searchProduct() {
   const input = document.getElementById("productInput").value;
-  const resultsDiv = document.getElementById("results");
+  const resultsDiv = document.gy<etElementById("results");
   resultsDiv.innerHTML = "Suche läuft...";
 
   try {
@@ -17,7 +17,7 @@ async function searchProduct() {
     const product = data.product;
     const nutriScore = product.nutrition_grades || "N/A";
     const imageUrl = product.image_url || "";
-    const search_produkt_name = product.product_name
+    var search_produkt_name = product.product_name
 
     resultsDiv.innerHTML = `
               <div class="product">
