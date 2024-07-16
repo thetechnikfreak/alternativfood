@@ -6,7 +6,7 @@ function onScanSuccess(decodedText, decodedResult) {
         ++countResults;
         lastResult = decodedText;
         var text = document.getElementById('productInput');
-    text.value += lastResult;
+    text.value = lastResult;
         // Handle on success condition with the decoded message.
         console.log(`Scan result ${decodedText}`, decodedResult);
         searchProduct()
