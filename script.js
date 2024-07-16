@@ -55,9 +55,9 @@ async function searchProduct() {
     console.error(error);
   }
 }
-
 async function findHealthierAlternatives(searchProductName, currentNutriScore) {
   const resultsDiv = document.getElementById("results");
+  const loaderDiv = document.getElementById("loader");
   const nutriScores = ["a", "b", "c", "d", "e"];
   const betterNutriScores = nutriScores.slice(0, nutriScores.indexOf(currentNutriScore));
   const apiKey = 'sk-pxNju75vKyXJVhjySvLCTdKxluNcijXvQDgFmpRRjZIWgAqe';
@@ -79,6 +79,8 @@ async function findHealthierAlternatives(searchProductName, currentNutriScore) {
     temperature: 0.7
   };
 
+  loaderDiv.style.display = "block";
+
   try {
     const response = await fetch(endpoint, {
       method: 'POST',
@@ -91,39 +93,52 @@ async function findHealthierAlternatives(searchProductName, currentNutriScore) {
 
     const data = await response.json();
     const term = data.choices[0].message.content.trim();
-    console.log(term);
 
-      try {
-        const response = await fetch(
-          `https://world.openfoodfacts.net/api/v2/search?categories_tags=${term}&sort_by=nutriscore&countries_lc=de&fields=product_name,image_url,nutrition_grades`
-        );
-        const data = await response.json();
-      
-        const healthierProducts = data.products.filter(product => betterNutriScores.includes(product.nutrition_grades));
-      
-        if (healthierProducts.length > 0) {
-          resultsDiv.innerHTML += `<h3>Gesündere Alternativen in der Kategorie ${term.replace(
-            /-/g,
-            " "
-          )}:</h3>`;
-          healthierProducts.slice(0, 5).forEach((product) => {
-            const productImageUrl = product.image_url || "";
+    try {
+      const response = await fetch(
+        `https://world.openfoodfacts.net/api/v2/search?categories_tags=${term}&countries_lc=de&countries=Deutschland&sort_by=nutriscore&fields=product_name,image_url,nutrition_grades`
+      );
+      const data = await response.json();
+  
+      const healthierProducts = data.products.filter(product => betterNutriScores.includes(product.nutrition_grades));
+  
+      if (healthierProducts.length > 0) {
+        resultsDiv.innerHTML += `<h3>Gesündere Alternativen in der Kategorie ${term.replace(/-/g, " ")}:</h3>`;
+        
+        for (const product of healthierProducts.slice(0, 5)) {
+          const productImageUrl = product.image_url || "";
+          const img = new Image();
+          img.src = productImageUrl;
+          img.alt = product.product_name;
+
+          img.onload = () => {
             resultsDiv.innerHTML += `
-                              <div class="product">
-                                  <h4>${product.product_name}</h4>
-                                  <img src="${productImageUrl}" alt="${
-              product.product_name
-            }" />
-                                  <p>Nutritional Score: ${product.nutrition_grades.toUpperCase()}</p>
-                              </div>
-                          `;
-          });
-          return;
-        }
-      } catch (error) {
-        console.error(error);
-      }
+              <div class="product">
+                <h4>${product.product_name}</h4>
+                <img src="${productImageUrl}" alt="${product.product_name}" />
+                <p>Nutritional Score: ${product.nutrition_grades.toUpperCase()}</p>
+              </div>
+            `;
+          };
 
+          img.onerror = () => {
+            resultsDiv.innerHTML += `
+              <div class="product">
+                <h4>${product.product_name}</h4>
+                <p>Bild konnte nicht geladen werden</p>
+                <p>Nutritional Score: ${product.nutrition_grades.toUpperCase()}</p>
+              </div>
+            `;
+          };
+        }
+        loaderDiv.style.display = "none"; 
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+    loaderDiv.style.display = "none";
     resultsDiv.innerHTML += "<p>Keine gesünderen Alternativen gefunden.</p>";
   } catch (error) {
     console.error('Error:', error);
