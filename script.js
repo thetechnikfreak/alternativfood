@@ -118,7 +118,7 @@ async function findHealthierAlternatives(categories, currentNutriScore) {
         console.error(error);
       }
     }
-  }
+  
 
   resultsDiv.innerHTML += "<p>Keine gesünderen Alternativen gefunden.</p>";
 }
