@@ -1,11 +1,11 @@
 async function searchProduct() {
   const input = document.getElementById("productInput").value;
-  const resultsDiv = document.gy<etElementById("results");
+  const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "Suche läuft...";
 
   try {
     const response = await fetch(
-      `https://world.openfoodfacts.org/api/v2/product/${input}?fields=product_name,image_url,nutrition_grades,categories_tags,countries_tags`
+      `https://world.openfoodfacts.org/api/v2/product/${input}?fields=product_name,image_url,nutrition_grades,categories_tags`
     );
     const data = await response.json();
 
@@ -17,7 +17,6 @@ async function searchProduct() {
     const product = data.product;
     const nutriScore = product.nutrition_grades || "N/A";
     const imageUrl = product.image_url || "";
-    var search_produkt_name = product.product_name
 
     resultsDiv.innerHTML = `
               <div class="product">
@@ -31,7 +30,7 @@ async function searchProduct() {
       resultsDiv.innerHTML += "<p>Das Produkt ist gesund!</p>";
     } else {
       resultsDiv.innerHTML +=
-        "<p>Das Produkt ist ungesund. Suche nach Alternativen...</p>";
+        "<p id='alternative-message'>Das Produkt ist ungesund. Suche nach Alternativen...</p>";
       findHealthierAlternatives(product.categories_tags, nutriScore);
     }
   } catch (error) {
@@ -43,59 +42,25 @@ async function searchProduct() {
 
 async function findHealthierAlternatives(categories, currentNutriScore) {
   const resultsDiv = document.getElementById("results");
+  const alternativeMessage = document.getElementById("alternative-message");
   const nutriScores = ["a", "b", "c", "d", "e"];
   const betterNutriScores = nutriScores.slice(
     0,
     nutriScores.indexOf(currentNutriScore)
   );
-  const apiKey = 'sk-pxNju75vKyXJVhjySvLCTdKxluNcijXvQDgFmpRRjZIWgAqe';
-            const endpoint = 'https://api.chatanywhere.com.cn/v1/chat/completions';
 
-            const requestData = {
-                model: 'gpt-4-turbo',
-                messages: [
-                    {
-                        role: 'system',
-                        content: 'You are an AI witch will get information about a produkt from an api and then give the user a catopgory wich descripes the produkt nothing mopre only the produkt '
-                    },
-                    {
-                        role: 'user',
-                        content: search_produkt_name
-                    }
-                ],
-                max_tokens: 50,
-                temperature: 0.7
-            };
-
-            fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body: JSON.stringify(requestData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                const term = data.choices[0].message.content
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred');
-            });
-
-  
+  for (const category of categories) {
     for (const nutriScore of betterNutriScores) {
       try {
         const response = await fetch(
-          `https://world.openfoodfacts.net/api/v2/search?search_term=${term}&nutrition_grades_tags=${nutriScore}&countries_lc=de&fields=product_name,image_url,nutrition_grades`
+          `https://world.openfoodfacts.net/api/v2/search?categories_tags=${category}&nutrition_grades_tags=${nutriScore}&countries_hierarchy=en:germany&fields=product_name,image_url,nutrition_grades`
         );
         const data = await response.json();
 
         const healthierProducts = data.products;
 
         if (healthierProducts.length > 0) {
+          alternativeMessage.remove();
           resultsDiv.innerHTML += `<h3>Gesündere Alternativen in der Kategorie ${category.replace(
             /-/g,
             " "
@@ -118,7 +83,8 @@ async function findHealthierAlternatives(categories, currentNutriScore) {
         console.error(error);
       }
     }
-  
+  }
 
+  alternativeMessage.remove();
   resultsDiv.innerHTML += "<p>Keine gesünderen Alternativen gefunden.</p>";
 }
