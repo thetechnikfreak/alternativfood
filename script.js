@@ -9,6 +9,7 @@ function onScanSuccess(decodedText, decodedResult) {
     text.value += lastResult;
         // Handle on success condition with the decoded message.
         console.log(`Scan result ${decodedText}`, decodedResult);
+        searchProduct()
     }
 }
 
