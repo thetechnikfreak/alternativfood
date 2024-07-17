@@ -1,4 +1,3 @@
-var resultContainer = document.getElementById('qr-reader-results');
 var lastResult, countResults = 0;
 
 function onScanSuccess(decodedText, decodedResult) {

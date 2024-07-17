@@ -1,18 +1,119 @@
+@font-face {
+  font-family: 'Steamed';
+  src: url('fonts/Steamed.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Block Berthold';
+  src: url('fonts/blockberthold.otf') format('opentype');
+}
+
+body {
+  background-color: rgb(91, 49, 94);
+  margin: 0;
+  padding: 0;
+}
+
 .loader {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-left-color: #3498db;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto;
-  }
-  
-  @keyframes spin {
-    0% {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+#title {
+  position: absolute;
+  color: #fec01a;
+  font-size: 50px;
+  font-family: 'Steamed', Helvetica, sans-serif;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  align-content: center;
+  text-align: center;
+  width: 35vw;
+  height: 35vw;
+  top: 10vw;
+  left: 10vw;
+}
+
+#qr-reader {
+  position: absolute;
+  color: #fec01a;
+  background-color: rgb(116, 68, 108);
+  border-radius: 30px;
+  align-content: center;
+  font-family: 'Block Berthold', Helvetica, sans-serif;
+  border: none !important;
+  margin-top: 10%;
+  left: 55vw;
+  width: 35vw;
+  height: 35vw;
+}
+
+#html5-qrcode-button-camera-permission {
+  border-radius: 10px;
+  background-color: #fec01a;
+  color: rgb(91, 49, 94);
+  font-family: 'Block Berthold', Helvetica, sans-serif;
+  text-transform: uppercase;
+  font-size: 16px;
+  height: 50px;
+  width: 200px;
+}
+
+#html5-qrcode-anchor-scan-type-change {
+  color: #fec01a;
+  font-family: 'Block Berthold', Helvetica, sans-serif;
+  font-size: 16px;
+  top: 10px;
+  position: relative;
+}
+
+.button {
+  border-radius: 10px;
+  background-color: #fec01a;
+  color: rgb(91, 49, 94);
+  font-family: 'Block Berthold', Helvetica, sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 16px;
+  height: 50px;
+  width: 200px;
+  border: none;
+}
+
+#inputs {
+  display: flex;
+  justify-content: center;
+  margin-top: 10vw;
+}
+
+#productInput {
+  margin-right: 5vw;
+}
+
+#suchButton {
+}
+
+#results {
+  margin-top: 20px;
+}
+.product {
+  margin-bottom: 15px;
+}
+.product img {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+@keyframes spin {
+  0% {
       transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
   }
+  100% {
+      transform: rotate(360deg);
+  }
+}
