@@ -14,16 +14,6 @@ body {
   padding: 0;
 }
 
-.loader {
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #3498db;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  animation: spin 1s linear infinite;
-  margin: 0 auto;
-}
-
 #title {
   position: absolute;
   color: #fec01a;
@@ -99,14 +89,37 @@ body {
 }
 
 #results {
-  margin-top: 20px;
+  margin-top: 10vw;
 }
 .product {
+  position: relative;
+  margin: 100px auto 0;
+  display: block;
+  color: #fec01a;
+  font-family: 'Steamed', Helvetica, sans-serif;
+  font-size: 24px;
+  letter-spacing: 2px;
+  width: 35vw;
+  text-align: center;
   margin-bottom: 15px;
 }
 .product img {
-  max-width: 100px;
-  max-height: 100px;
+  justify-content: center;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+  max-width: 35vw;
+  max-height: 35vw;
+}
+
+.loader {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #fec01a;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
 }
 
 @keyframes spin {
@@ -116,4 +129,12 @@ body {
   100% {
       transform: rotate(360deg);
   }
+}
+
+#health {
+  color: rgb(171, 221, 107);
+  font-family: 'Block Berthold', Helvetica, sans-serif;
+  font-size: 24px;
+  letter-spacing: 2px;
+  text-align: center;
 }
