@@ -39,7 +39,7 @@ async function searchProduct() {
       <div class="product">
         <h2>${product.product_name}</h2>
         <img src="${imageUrl}" alt="${product.product_name}" />
-        <p>Nutritional Score: ${nutriScore.toUpperCase()}</p>
+        <p>Nutri-Score: ${nutriScore.toUpperCase()}</p>
       </div>
     `;
 
@@ -56,6 +56,7 @@ async function searchProduct() {
 }
 async function findHealthierAlternatives(searchProductName, currentNutriScore) {
   const resultsDiv = document.getElementById("results");
+  const alternativesDiv = document.getElementById("alternatives");
   const loaderDiv = document.getElementById("loader");
   const nutriScores = ["a", "b", "c", "d", "e"];
   const betterNutriScores = nutriScores.slice(0, nutriScores.indexOf(currentNutriScore));
@@ -111,11 +112,11 @@ async function findHealthierAlternatives(searchProductName, currentNutriScore) {
           img.alt = product.product_name;
 
           img.onload = () => {
-            resultsDiv.innerHTML += `
-              <div class="product">
+            alternativesDiv.innerHTML += `
+              <div class="alternative">
                 <h4>${product.product_name}</h4>
                 <img src="${productImageUrl}" alt="${product.product_name}" />
-                <p>Nutritional Score: ${product.nutrition_grades.toUpperCase()}</p>
+                <p>Nutri-Score: ${product.nutrition_grades.toUpperCase()}</p>
               </div>
             `;
           };
