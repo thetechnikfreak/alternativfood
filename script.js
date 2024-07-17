@@ -96,7 +96,7 @@ async function findHealthierAlternatives(searchProductName, currentNutriScore) {
 
     try {
       const response = await fetch(
-        `https://world.openfoodfacts.net/api/v2/search?categories_tags=${term}&countries_lc=de&countries=Deutschland&sort_by=nutriscore&fields=product_name,image_url,nutrition_grades`
+        `https://world.openfoodfacts.net/api/v1/search?categories_tags=${term}&countries_lc=de&countries=Deutschland&sort_by=nutriscore&fields=product_name,image_url,nutrition_grades`
       );
       const data = await response.json();
   
