@@ -36,6 +36,7 @@ This project is a simple web application that allows users to scan or input a pr
 - HTML, CSS
 - JavaScript
 - OpenFoodFacts API
+- Chatanywhere API
 
 
 ## API Integration
