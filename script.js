@@ -120,15 +120,7 @@ async function findHealthierAlternatives(searchProductName, currentNutriScore) {
             `;
           };
 
-          img.onerror = () => {
-            resultsDiv.innerHTML += `
-              <div class="product">
-                <h4>${product.product_name}</h4>
-                <p>Bild konnte nicht geladen werden</p>
-                <p>Nutritional Score: ${product.nutrition_grades.toUpperCase()}</p>
-              </div>
-            `;
-          };
+          img.onerror = () => {};
         }
         loaderDiv.style.display = "none"; 
         return;
