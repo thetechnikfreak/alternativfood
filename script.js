@@ -1,4 +1,3 @@
-var resultContainer = document.getElementById('qr-reader-results');
 var lastResult, countResults = 0;
 
 function onScanSuccess(decodedText, decodedResult) {
@@ -45,9 +44,9 @@ async function searchProduct() {
     `;
 
     if (nutriScore === "a" || nutriScore === "b") {
-      resultsDiv.innerHTML += "<p>Das Produkt ist gesund!</p>";
+      resultsDiv.innerHTML += "<p id='health'>Das Produkt ist gesund!</p>";
     } else {
-      resultsDiv.innerHTML += "<p>Das Produkt ist ungesund. Suche nach Alternativen...</p>";
+      resultsDiv.innerHTML += "<p id='health>Das Produkt ist ungesund. Suche nach Alternativen...</p>";
       findHealthierAlternatives(product.product_name, nutriScore);
     }
   } catch (error) {
@@ -103,7 +102,7 @@ async function findHealthierAlternatives(searchProductName, currentNutriScore) {
       const healthierProducts = data.products.filter(product => betterNutriScores.includes(product.nutrition_grades));
   
       if (healthierProducts.length > 0) {
-        resultsDiv.innerHTML += `<h3>Gesündere Alternativen in der Kategorie ${term.replace(/-/g, " ")}:</h3>`;
+        resultsDiv.innerHTML += `<h3 id="health">Gesündere Alternativen in der Kategorie ${term.replace(/-/g, " ")}:</h3>`;
         
         for (const product of healthierProducts.slice(0, 5)) {
           const productImageUrl = product.image_url || "";
